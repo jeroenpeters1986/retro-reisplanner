@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reisadvies{% endblock %}
+
+{% block test %}
+
+
+    <div id="errors">
+    </div>
+    <form method="get" accept-charset="UTF-8" action="planner.action" id="plannerForm">
+        <dl>
+            <dt><label for="from">Van:</label></dt>
+            <dd><input type="text" id="from" name="from" value=""/>  </dd>
+        </dl>
+        <dl>
+            <dt><label for="to">Naar:</label></dt>
+            <dd><input type="text" id="to" name="to" value=""/>  </dd>
+        </dl>
+        <dl>
+            <dt><label for="via">Via:</label></dt>
+            <dd><input type="text" id="via" name="via" value=""/> </dd>
+        </dl>
+        <dl>
+            <dt><label for="date">Datum (dd-mm):</label></dt>
+            <dd><input type="text" id="date" name="date" value="18-03" size="6"/> </dd>
+        </dl>
+        <dl>
+            <dt><label for="time">Tijd (uu:mm):</label></dt>
+            <dd><input type="text" id="time" name="time" value="17:56" size="6"/> </dd>
+        </dl>
+        <dl>
+            <dt class="fextra"> &#160;</dt>
+            <dd><input type="radio" id="timev" name="departure" value="true" checked="checked"/>&#160;<label for="timev">Vertrekken</label>
+                <input type="radio" id="timea" name="departure" value="false"/>&#160;<label for="timea">Aankomen</label></dd>
+        </dl>
+        <dl>
+            <dt class="fextra">&#160;</dt>
+            <dd><input type="checkbox" id="card" name="card" value="true"/>&#160;<label for="card">NS/OV-Jaarkaart</label>&#160;&#160;
+                <a href="help.action?msg=card"><img class="help" src="/static/img/help.gif" alt="?"></img></a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fextra">&#160;</dt>
+            <dd><input type="checkbox" id="hsl" name="hsl" value="true" checked="checked"/>&#160;<label for="hsl">Incl. HST-treinen</label>&#160;&#160;
+                <a href="help.action?msg=hsl"><img class="help" src="/static/img/help.gif" alt="?"></img></a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="fextra">&#160;</dt>
+            <dd><input name="planroute" type="submit" value="Reisadvies"/></dd>
+        </dl>
+    </form>
+
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="" id="plannerForm">
+        <dl>
+            <dt><label for="fromStation">Van (vertrek):</label></dt>
+            <dd><input type="text" id="fromStation" name="fromStation" required placeholder="Bijv. Emmen" value="{{ formData.fromStation|e }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="toStation">Naar (aankomst):</label></dt>
+            <dd><input type="text" id="toStation" name="toStation" required placeholder="Bijv. Groningen" value="{{ formData.toStation|e }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="viaStation">Via (optioneel):</label></dt>
+            <dd><input type="text" id="viaStation" name="viaStation" placeholder="Bijv. Zwolle" value="{{ formData.viaStation|e }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="date">Datum:</label></dt>
+            <dd><input type="date" id="date" name="date" required value="{{ formData.date|e }}"></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="time">Tijd:</label></dt>
+            <dd><input type="time" id="time" name="time" required value="{{ formData.time|e }}"></dd>
+        </dl>
+
+        <div class="radio-group">
+            <label>Tijdtype:</label>
+            <input type="radio" id="vertrek" name="timeType" value="vertrek" {% if formData.timeType == 'vertrek' %}checked{% endif %}>
+            <label for="vertrek">Vertrek</label>
+            <input type="radio" id="aankomst" name="timeType" value="aankomst" {% if formData.timeType == 'aankomst' %}checked{% endif %}>
+            <label for="aankomst">Aankomst</label>
+        </div>
+
+        <div class="radio-group">
+            <label>Optie:</label>
+            <input type="radio" id="goedkoopste" name="sortOption" value="goedkoopste" {% if formData.sortOption == 'goedkoopste' %}checked{% endif %}>
+            <label for="goedkoopste">Goedkoopste</label>
+            <input type="radio" id="snelste" name="sortOption" value="snelste" {% if formData.sortOption == 'snelste' %}checked{% endif %}>
+            <label for="snelste">Snelste</label>
+        </div>
+
+        <dl>
+            <dt class="fextra">&#160;</dt>
+            <dd><input name="planroute" type="submit" value="Reisadvies"/></dd>
+        </dl>
+    </form>
+
+    {% if reisInformatie is not null %}
+        <h2>Reisresultaat</h2>
+        {% if reisInformatie.trips is defined and reisInformatie.trips|length > 0 %}
+            {% for trip in reisInformatie.trips %}
+                <div class="trip">
+                    {% if trip.legs is defined and trip.legs|length > 0 %}
+                        {% for leg in trip.legs %}
+                            <div class="leg">
+                                {# Bepaal vertrekgegevens #}
+                                {% set depTime = leg.origin.plannedDateTime is defined ? leg.origin.plannedDateTime|date("H:i") : "??:??" %}
+                                {% set depStation = leg.origin.name|default("Onbekend") %}
+                                {% set depTrack = leg.origin.plannedTrack|default("?") %}
+
+                                {# Haal productinformatie op #}
+                                {% set product = "" %}
+                                {% if leg.product is defined %}
+                                    {% set product = leg.product.displayName|default("") %}
+                                    {% if leg.product.notes is defined %}
+                                        {% set foundProductDirection = false %}
+                                        {% for noteGroup in leg.product.notes %}
+                                            {% for note in noteGroup %}
+                                                {% if note.key is defined and note.key == "PRODUCT_DIRECTION" and not foundProductDirection %}
+                                                    {% set product = product ~ " " ~ note.value %}
+                                                    {% set foundProductDirection = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+
+                                {# Bepaal aankomstgegevens #}
+                                {% set arrTime = leg.destination.plannedDateTime is defined ? leg.destination.plannedDateTime|date("H:i") : "??:??" %}
+                                {% set arrStation = leg.destination.name|default("Onbekend") %}
+                                {% set arrTrack = leg.destination.plannedTrack|default("?") %}
+
+                                <p class="departure">V {{ depTime }} &nbsp;&nbsp; {{ depStation }} (spoor {{ depTrack }})</p>
+                                {% if product is not empty %}
+                                    <p class="product"><em>{{ product }}</em></p>
+                                {% endif %}
+                                <p class="arrival">A {{ arrTime }} &nbsp;&nbsp; {{ arrStation }} (spoor {{ arrTrack }})</p>
+                            </div>
+                            {% if not loop.last %}
+                                <div class="divider"></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>Geen reisgegevens gevonden.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Geen reisresultaten ontvangen.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
