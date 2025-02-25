@@ -52,3 +52,16 @@ function getOrFetchCachedNsApiResult($api_route)
 
     return $data;
 }
+
+function sortDisruptions($disruptions)
+{
+    $sortedDisruptions = [];
+    foreach($disruptions as $disruption) {
+        if(! isset($sortedDisruptions[$disruption['type']])) {
+            $sortedDisruptions[$disruption['type']] = [];
+        }
+
+        $sortedDisruptions[$disruption['type']][] = $disruption;
+    }
+    return $sortedDisruptions;
+}

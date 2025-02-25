@@ -25,37 +25,42 @@
     <h1>Storingen en Werkzaamheden</h1>
 
     {% if disruptions is not empty %}
-        {% for disruption in disruptions %}
-            <div class="disruption">
-                {# Toon de titel (bijvoorbeeld "Geldermalsen-Dordrecht" of "Aangepaste dienstregeling tot en met vrijdag") #}
-                <h2>{{ disruption.title }}</h2>
+        {% for disruption_type, disruptions_list  in disruptions %}
 
-                {# Toon de berichttijd – we gaan ervan uit dat registrationTime (of releaseTime) aanwezig is.
-                       Pas eventueel de datumopmaak aan. Let op: om de datum in het Nederlands te tonen kun je
-                       bijvoorbeeld de locale instellen in PHP of gebruik maken van een vertaalklasse.  #}
-                {% if disruption.registrationTime is defined %}
-                    <p>
-                        Message {{ disruption.registrationTime | date("l d F Y, H:i") }} :
-                    </p>
-                {% endif %}
+            <h1>{{ disruption_type }}</h1>
 
-                {# Toon de oorzaak/reden; hier veronderstellen we dat in het eerste timespan de situatie is opgenomen. #}
-                {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
-                    <p>
-                        Reason: {{ disruption.timespans[0].situation.label }}
-                    </p>
-                {% endif %}
+            {% for disruption in disruptions_list %}
+                <div class="disruption">
+                    {# Toon de titel (bijvoorbeeld "Geldermalsen-Dordrecht" of "Aangepaste dienstregeling tot en met vrijdag") #}
+                    <h2>{{ disruption.title }}</h2>
 
-                {# Toon eventueel een of meerdere omschrijvingen, bijvoorbeeld uit publicationSections.
-                       In dit voorbeeld gaan we ervan uit dat elk publicationSection een consequence bevat met een beschrijving. #}
-                {% if disruption.publicationSections is defined %}
-                    {% for section in disruption.publicationSections %}
-                        {% if section.consequence is defined and section.consequence.description is defined %}
-                            <p>{{ section.consequence.description }}</p>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </div>
+                    {# Toon de berichttijd – we gaan ervan uit dat registrationTime (of releaseTime) aanwezig is.
+                           Pas eventueel de datumopmaak aan. Let op: om de datum in het Nederlands te tonen kun je
+                           bijvoorbeeld de locale instellen in PHP of gebruik maken van een vertaalklasse.  #}
+                    {% if disruption.registrationTime is defined %}
+                        <p>
+                            Message {{ disruption.registrationTime | date("l d F Y, H:i") }} :
+                        </p>
+                    {% endif %}
+
+                    {# Toon de oorzaak/reden; hier veronderstellen we dat in het eerste timespan de situatie is opgenomen. #}
+                    {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
+                        <p>
+                            Reason: {{ disruption.timespans[0].situation.label }}
+                        </p>
+                    {% endif %}
+
+                    {# Toon eventueel een of meerdere omschrijvingen, bijvoorbeeld uit publicationSections.
+                           In dit voorbeeld gaan we ervan uit dat elk publicationSection een consequence bevat met een beschrijving. #}
+                    {% if disruption.publicationSections is defined %}
+                        {% for section in disruption.publicationSections %}
+                            {% if section.consequence is defined and section.consequence.description is defined %}
+                                <p>{{ section.consequence.description }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
         {% endfor %}
     {% else %}
         <p>Geen storingen of werkzaamheden gevonden.</p>
