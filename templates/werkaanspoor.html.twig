@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Storingen{% endblock %}
+{% block title %}Werk aan het spoor{% endblock %}
 
 {% block content %}
 
@@ -20,7 +20,7 @@
         }
     </style>
 
-    <h2>Storingen en calamiteiten</h2>
+    <h2>Werkzaamheden</h2>
 
     {% if disruptions is not empty %}
         {% for disruption_type, disruptions_list  in disruptions %}

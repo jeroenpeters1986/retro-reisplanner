@@ -20,5 +20,7 @@ $storingen = getOrFetchCachedNsApiResult('/disruptions/v3?isActive=true');
 // Template engine
 $templateLoader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($templateLoader, [
-    'cache' => false,
+    //'cache' => __DIR__ . '/../cache/twigcache',
+    'cache' => __DIR__ . '/../cache/twigcache',
+    'auto_reload' => true,
 ]);

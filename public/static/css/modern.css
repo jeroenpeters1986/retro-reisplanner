@@ -12,7 +12,7 @@ body{margin:0px; color:#000066; padding: 0px; font-family:helvetica,arial,sans-s
 ul{list-style-position: inside;padding: 0; margin: 2px;}
 ul.favs{margin: 2px; }
 ul.news{margin: 0px; font-size: small}
-li.favs, li.news{list-style-image: url("/web/20160520194735im_/http://mobiel.ns.nl/static/img/arrow-right.gif");}
+li.favs, li.news{list-style-image: url("/static/img/arrow-right.gif");}
 .disruption{font-size: small;}
 .drop{margin: 2px; padding: 2px;	background-color: #ffffff;}
 .dropC{margin-top: 5px;	display: block;	font-size: small;}
@@ -53,23 +53,6 @@ td.price{	text-align: right;	width: 6em;}
 .redAlert{ color: white; font-weight: bold;}
 .help{  vertical-align: bottom;}
 .seperatorLineCell {margin: 0 0 0 0; padding:0 0 0 0; border-spacing:0; height:1px;font-size:0}
-/*
-     FILE ARCHIVED ON 19:47:35 May 20, 2016 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 21:36:53 Feb 10, 2025.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  captures_list: 0.465
-  exclusion.robots: 0.023
-  exclusion.robots.policy: 0.012
-  esindex: 0.01
-  cdx.remote: 12.105
-  LoadShardBlock: 672.838 (3)
-  PetaboxLoader3.datanode: 562.686 (5)
-  PetaboxLoader3.resolve: 424.726 (3)
-  load_resource: 506.554 (2)
-*/
+/* JP */
+.drop.trip p {margin: 0px;}

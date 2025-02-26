@@ -16,8 +16,7 @@
                                                height="17" alt=""/></a>
         <h2 style="display:inline;margin-left:4px;">Retro Reisplanner</h2>
     </div>
-    <did id="topimg"><img src="/static/img/topbar.jpg" height="60" alt="Reisadvies" id="topbarimg">
-</div>
+    <div id="topimg"><img src="/static/img/topbar.jpg" height="60" alt="Reisadvies" id="topbarimg"></div>
 </div>
 <div id="hbar">
     <ul id="menu">
@@ -37,8 +36,8 @@
         </li>
         <li>&nbsp;
             <img src="/static/img/ffcc36.gif" class="menuseperator" alt="|"/>
-            <a class="tab" href="werkaanspoor.action" accesskey="4">
-                <img src="/static/img/werkzaamheden.gif" alt="Werkzaamheden"/>
+            <a class="{{ page == 'werkaanspoor' ? 's' : '' }}tab" href="werkaanspoor.php" accesskey="4">
+                <img src="/static/img/werkzaamheden{{ page == 'werkaanspoor' ? 's' : '' }}.gif" alt="Werkzaamheden"/>
             </a>
         </li>
     </ul>

@@ -106,7 +106,7 @@
         <h2>Reisresultaat</h2>
         {% if reisInformatie.trips is defined and reisInformatie.trips|length > 0 %}
             {% for trip in reisInformatie.trips %}
-                <div class="trip">
+                <div class="drop trip">
                     {% if trip.legs is defined and trip.legs|length > 0 %}
                         {% for leg in trip.legs %}
                             <div class="leg">
@@ -116,7 +116,8 @@
                                 {% set depTrack = leg.origin.plannedTrack|default("?") %}
 
                                 {# Haal productinformatie op #}
-                                {% set product = "" %}
+                                {% set type_train = "" %}
+                                {% set train_direction = "" %}
                                 {% if leg.product is defined %}
                                     {% set product = leg.product.displayName|default("") %}
                                     {% if leg.product.notes is defined %}
@@ -124,6 +125,8 @@
                                         {% for noteGroup in leg.product.notes %}
                                             {% for note in noteGroup %}
                                                 {% if note.key is defined and note.key == "PRODUCT_DIRECTION" and not foundProductDirection %}
+                                                    {% set type_train = product %}
+                                                    {% set train_direction = note.value %}
                                                     {% set product = product ~ " " ~ note.value %}
                                                     {% set foundProductDirection = true %}
                                                 {% endif %}
@@ -137,11 +140,11 @@
                                 {% set arrStation = leg.destination.name|default("Onbekend") %}
                                 {% set arrTrack = leg.destination.plannedTrack|default("?") %}
 
-                                <p class="departure">V {{ depTime }} &nbsp;&nbsp; {{ depStation }} (spoor {{ depTrack }})</p>
-                                {% if product is not empty %}
-                                    <p class="product"><em>{{ product }}</em></p>
+                                <p class="departure"><strong>V {{ depTime }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="text-decoration: underline">{{ depStation }}</span> &nbsp;spoor {{ depTrack }}</strong></p>
+                                {% if type_train is not empty %}
+                                    <p class="product">{{ type_train }} <em>{{ train_direction }}</em></p>
                                 {% endif %}
-                                <p class="arrival">A {{ arrTime }} &nbsp;&nbsp; {{ arrStation }} (spoor {{ arrTrack }})</p>
+                                <p class="arrival"><strong>A {{ arrTime }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ arrStation }} &nbsp;spoor {{ arrTrack }}</strong></p>
                             </div>
                             {% if not loop.last %}
                                 <div class="divider"></div>
