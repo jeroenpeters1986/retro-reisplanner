@@ -15,7 +15,8 @@ define('NS_API_BASE_URL', $_ENV['NS_API_BASE_URL']);
 define('NS_API_KEY', $_ENV['NS_API_KEY']);
 define('API_CACHE_TIME', $_ENV['API_CACHE_TIME']);
 
-$storingen = getOrFetchCachedNsApiResult('/disruptions/v3?isActive=true');
+$disruptionsApiResponse = getOrFetchCachedNsApiResult('/disruptions/v3?isActive=true');
+$storingen = sortDisruptions($disruptionsApiResponse);
 
 // Template engine
 $templateLoader = new FilesystemLoader(__DIR__ . '/../templates');

@@ -12,18 +12,18 @@
 
 <div id="heading">
     <div id="headingTitle">
-        <a class="nu" href="index.action"><img style="display:inline;" src="/static/img/logo-41x17.gif" width="41"
+        <a class="nu" href="index.php"><img style="display:inline;" src="/static/img/logo-41x17.gif" width="41"
                                                height="17" alt=""/></a>
         <h2 style="display:inline;margin-left:4px;">Retro Reisplanner</h2>
     </div>
-    <div id="topimg"><img src="/static/img/topbar.jpg" height="60" alt="Reisadvies" id="topbarimg"></div>
+    <div id="topimg"><img src="/static/img/topbar2.jpg" height="60" alt="Reisadvies" id="topbarimg"></div>
 </div>
 <div id="hbar">
     <ul id="menu">
         <li><a class="{{ page == 'index' ? 's' : '' }}tab" href="/" accesskey="1">Reisplanner</a></li>
         <li>&nbsp;
             <img src="/static/img/ffcc36.gif" class="menuseperator" alt="|"/>
-            <a class="tab" href="#" accesskey="2">Vertrektijden</a>
+            <a class="{{ page == 'actvertrektijden' ? 's' : '' }}tab" href="actvertrektijden.php" accesskey="2">Vertrektijden</a>
         </li>
         <li>&nbsp;
             <img src="/static/img/ffcc36.gif" class="menuseperator" alt="|"/>
@@ -44,23 +44,27 @@
     <div class="clear"></div>
 </div>
 <div id="page">
-    <div id="favs" class="drop">
-        <a id="aShowFav" class="dh" href="planner.action?showfav=true"
-           onclick="t(event,'favContainer','exp');return false;"><span id="exp" class="col">[+] </span> Kies uit
-            favoriete reis</a>
-        <div id="favContainer" class="dropE">
-            <p>Er zijn nog geen favorieten, plan eerst een reis.</p>
+
+    {% if page != 'actvertrektijden' %}
+        <div id="favs" class="drop">
+            <a id="aShowFav" class="dh" href="planner.action?showfav=true"
+               onclick="t(event,'favContainer','exp');return false;"><span id="exp" class="col">[+] </span> Kies uit
+                favoriete reis</a>
+            <div id="favContainer" class="dropE">
+                <p>Er zijn nog geen favorieten, plan eerst een reis.</p>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     {% block content %}{% endblock %}
 
 </div>
 <div id="footer">
     <p>
-        &#169; 2016 NS&#160;|&#160;<a href="index.action" accesskey="0"><strong>Home</strong></a>&#160;|&#160;<a
-                href="?lang=en">English version</a>&#160;|&#160;<a href="?theme=classic">Classic</a>&#160;|&#160;<a
-                href="stations.action">Stationslijst</a>
+        &#169; {{ "now"|date("Y") }} JP&#160;|&#160;<a href="index.php" accesskey="0"><strong>Home</strong></a>
+{#        &#160;|&#160;<a#}
+{#                href="?lang=en">English version</a>&#160;|&#160;<a href="?theme=classic">Classic</a>&#160;|&#160;<a#}
+{#                href="stations.action">Stationslijst</a>#}
     </p>
 </div>
 <script type="text/javascript">var favs = [];</script>

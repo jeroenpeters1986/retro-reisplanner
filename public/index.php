@@ -12,7 +12,7 @@ $formData = [
     'viaStation'  => $_POST['viaStation'] ?? '',
     'date'        => $_POST['date'] ?? date('Y-m-d'),
     'time'        => $_POST['time'] ?? date('H:i'),
-    'timeType'    => $_POST['timeType'] ?? 'vertrek',
+    'departure'   => $_POST['departure'] ?? 'true',
     'sortOption'  => $_POST['sortOption'] ?? 'goedkoopste'
 ];
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $viaStation  = trim($_POST['viaStation'] ?? '');
     $date        = trim($_POST['date'] ?? '');
     $time        = trim($_POST['time'] ?? '');
-    $timeType    = $_POST['timeType'] ?? 'vertrek';
+    $departure   = $_POST['departure'] ?? 'true';
     $sortOption  = $_POST['sortOption'] ?? 'goedkoopste';
 
     // Gebruik standaardwaarden als datum of tijd niet ingevuld is
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params['viaStation'] = $viaStation;
     }
     // Als gekozen is voor aankomsttijd, geef dit door
-    if ($timeType === 'aankomst') {
+    if ($departure === 'false') {
         $params['searchForArrival'] = 'true';
     }
     // Sorteerparameter (pas aan indien de API een andere parameter verwacht)
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Render de template en geef de data door
 echo $twig->render('reisadvies.html.twig', [
     'reisInformatie'    => json_decode($responseData ?? '', true),
-    'aantalStoringen'   => count($storingen),
+    'aantalStoringen'   => count($storingen['CALAMITY']),
     'page'              => 'index',
     'formData'          => $formData,
 ]);

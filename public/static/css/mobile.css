@@ -1,0 +1,39 @@
+body{color:#006;font-family:helvetica,arial,sans-serif;font-weight:normal;margin:5px 5px 25px;}
+p{font-size:x-small;}
+h1{font-size:24px;}
+h3{color:#000;}
+h4{font-size:small;font-weight:bold;}
+dt{float:left;width:95px;font-size:x-small;margin-right:4px;}
+dt.actdept{width:100px;}
+table{border-spacing:0;}
+tr.gray{background:silver;}
+.bold{font-weight:700;}
+.table{background:#F7F7FE;}
+.even{background-color:#fc3;}
+.odd{background-color:#FFF;}
+.warn{color:red;font-weight:700;font-size:x-small;}
+a{color:#006;text-decoration:underline;font-size:x-small;}
+li{font-size:x-small;margin-bottom:4px;}
+.disruption{font-size: x-small;}
+a.hyperlink{color:#006;}
+.cancelledLeg{color:gray;font-weight:700;}
+.left{position:absolute;left:0;margin:5px;}
+.right{position:absolute;right:0;text-align:right;margin:5px;}
+img{border:none;}
+#menu{padding: 0px;}
+#menu li{display:inline;}
+.dropE{display:none;}
+.dropC{display:block;}
+.fRight{float:right;margin-top:1px;margin-bottom:1px;}
+.fLeft{float:left;margin-bottom:1px;margin-top:1px;}
+.clear{clear:both;}
+p,dd,td,th,.time{font-size:x-small;}
+dl,#menu{margin:0;}
+.dh,.traject{font-size:x-small; font-weight:bold;}
+.travelPrice th{text-align: left; font-size: x-small;	font-weight: bold;}
+.travelPrice th[scope=col]{	text-align: right;}
+.travelPrice th[scope=row]{	text-align: left;}
+td.price{	text-align: right;	width: 6em;}
+#redAlertBox{ margin: 2px; background-color: white; padding: 5px;}
+.redAlert{ color: black; font-weight: bold;}
+.seperatorLineCell {margin: 0 0 0 0; padding:0 0 0 0; border-spacing:0;}

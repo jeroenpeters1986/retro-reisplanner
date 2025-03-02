@@ -79,23 +79,18 @@
             <dt><label for="time">Tijd:</label></dt>
             <dd><input type="time" id="time" name="time" required value="{{ formData.time|e }}"></dd>
         </dl>
-
-        <div class="radio-group">
-            <label>Tijdtype:</label>
-            <input type="radio" id="vertrek" name="timeType" value="vertrek" {% if formData.timeType == 'vertrek' %}checked{% endif %}>
-            <label for="vertrek">Vertrek</label>
-            <input type="radio" id="aankomst" name="timeType" value="aankomst" {% if formData.timeType == 'aankomst' %}checked{% endif %}>
-            <label for="aankomst">Aankomst</label>
-        </div>
-
-        <div class="radio-group">
-            <label>Optie:</label>
-            <input type="radio" id="goedkoopste" name="sortOption" value="goedkoopste" {% if formData.sortOption == 'goedkoopste' %}checked{% endif %}>
-            <label for="goedkoopste">Goedkoopste</label>
-            <input type="radio" id="snelste" name="sortOption" value="snelste" {% if formData.sortOption == 'snelste' %}checked{% endif %}>
-            <label for="snelste">Snelste</label>
-        </div>
-
+        <dl>
+            <dt class="fextra"> &nbsp;</dt>
+            <dd><input type="radio" id="timev" name="departure" value="true" checked="checked">&nbsp;<label for="timev">Aankomst</label>
+                <input type="radio" id="timea" name="departure" value="false">&nbsp;<label for="timea">Vertrek</label></dd>
+        </dl>
+        <dl>
+            <dt class="fextra"> &nbsp;</dt>
+            <dd><input type="radio" id="goedkoopste" name="sortOption" value="goedkoopste" {% if formData.sortOption == 'goedkoopste' %}checked{% endif %}>
+                <label for="goedkoopste">Goedkoopste</label>
+                <input type="radio" id="snelste" name="sortOption" value="snelste" {% if formData.sortOption == 'snelste' %}checked{% endif %}>
+                <label for="snelste">Snelste</label></dd>
+        </dl>
         <dl>
             <dt class="fextra">&#160;</dt>
             <dd><input name="planroute" type="submit" value="Reisadvies"/></dd>

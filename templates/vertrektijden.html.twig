@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Storingen{% endblock %}
+
+{% block content %}
+
+        <div id="errors">
+        </div>
+        <form method="POST" accept-charset="UTF-8">
+            <dl>
+                <dt class="actdept">Van welk station?</dt>
+                <dd><input type="text" id="from" name="from" value=""></dd>
+            </dl>
+            <dl>
+                <dt class="actdept">&nbsp;</dt>
+                <dd><input name="getav" type="submit" value="Bekijken"></dd>
+            </dl>
+        </form>
+        <div id="actdept" class="drop">
+            <a id="aShowFavStations" class="dh" href="actvertrektijden.php?showFavStations=true" onclick="t(event,'actdeptContainer','exp');return false;"><span id="exp" class="col">[+] </span> Favoriete stations</a>
+            <div id="actdeptContainer" class="dropE">
+                <ul class="favs">
+                </ul>
+                <p>Er zijn nog geen favorieten, plan eerst een reis.</p>
+            </div>
+        </div>
+
+    {% if stationId %}
+        <p>Het station ID is: <strong>{{ stationId }}</strong></p>
+    {% elseif error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if departures and departures.payload.departures is defined %}
+        <h2>Vertrektijden van station {{ stationName }}</h2>
+        <ul>
+            {% for departure in departures.payload.departures %}
+                <li>
+                    <strong>{{ departure.plannedDateTime|date("H:i") }}</strong>: {{ departure.direction }} (spoor {{ departure.plannedTrack }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Geen vertrektijden gevonden.</p>
+    {% endif %}
+
+{% endblock %}
