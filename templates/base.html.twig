@@ -5,7 +5,7 @@
     <title>{% block title %}{% endblock %} Retroreis Reisplanner</title>
     <meta content="width = device-width" name="viewport"/>
     <meta content="initial-scale=1.0, user-scalable=1" name="viewport"/>
-    <link rel="stylesheet" media="screen,handheld" type="text/css" href="/static/css/modern.css"/>
+    <link rel="stylesheet" media="screen,handheld" type="text/css" href="/static/css/{{ getTheme() }}.css"/>
     <script type="text/javascript" src="/static/custom-min.js"></script>
 </head>
 <body>
@@ -16,7 +16,9 @@
                                                height="17" alt=""/></a>
         <h2 style="display:inline;margin-left:4px;">Retro Reisplanner</h2>
     </div>
-    <div id="topimg"><img src="/static/img/topbar2.jpg" height="60" alt="Reisadvies" id="topbarimg"></div>
+    {% if getTheme() is same as('modern') %}
+        <div id="topimg"><img src="/static/img/topbar2.jpg" height="60" alt="Reisadvies" id="topbarimg"></div>
+    {% endif %}
 </div>
 <div id="hbar">
     <ul id="menu">
@@ -37,7 +39,11 @@
         <li>&nbsp;
             <img src="/static/img/ffcc36.gif" class="menuseperator" alt="|"/>
             <a class="{{ page == 'werkaanspoor' ? 's' : '' }}tab" href="werkaanspoor.php" accesskey="4">
-                <img src="/static/img/werkzaamheden{{ page == 'werkaanspoor' ? 's' : '' }}.gif" alt="Werkzaamheden"/>
+                {% if getTheme() is same as('modern') %}
+                    <img src="/static/img/werkzaamheden{{ page == 'werkaanspoor' ? 's' : '' }}.gif" alt="Werkzaamheden"/>
+                {% else %}
+                    Werkzaamheden
+                {% endif %}
             </a>
         </li>
     </ul>
@@ -62,9 +68,13 @@
 <div id="footer">
     <p>
         &#169; {{ "now"|date("Y") }} JP&#160;|&#160;<a href="index.php" accesskey="0"><strong>Home</strong></a>
-{#        &#160;|&#160;<a#}
-{#                href="?lang=en">English version</a>&#160;|&#160;<a href="?theme=classic">Classic</a>&#160;|&#160;<a#}
-{#                href="stations.action">Stationslijst</a>#}
+{#        &#160;|&#160;<a href="?lang=en">English version</a>#}
+        {% if getTheme() is same as('modern') %}
+            &#160;|&#160;<a href="?theme=classic">Classic</a>
+        {% else %}
+            &#160;|&#160;<a href="?theme=modern">Modern</a>
+        {% endif %}
+{#      &#160;|&#160;<a href="stations.action">Stationslijst</a>#}
     </p>
 </div>
 <script type="text/javascript">var favs = [];</script>

@@ -65,3 +65,11 @@ function sortDisruptions($disruptions)
     }
     return $sortedDisruptions;
 }
+
+function store_theme()
+{
+    if(isset($_GET['theme']) && in_array($_GET['theme'], ['classic', 'modern'])) {
+        setcookie('theme', $_GET['theme'], time() + 60 * 60 * 24 * 30);
+        Header('Location: ' . $_SERVER['PHP_SELF']);
+    }
+}
