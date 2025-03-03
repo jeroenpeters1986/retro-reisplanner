@@ -4,14 +4,14 @@ require_once __DIR__ . '/../private/bootstrap.php';
 
 // Storingen worden al opgehaald in bootstrap.php
 
-// Render de template en geef de data door
+unset($storingen['MAINTENANCE']);
+
 echo $twig->render('storingen.html.twig', [
     'disruptions'       => $storingen,
-    'aantalStoringen'   => count($storingen['CALAMITY']),
+    'aantalStoringen'   => $aantalStoringen,
     'page'              => 'storingen',
-    'names'             => [
+    'titles'            => [
         'DISRUPTION' => 'Storing',
         'CALAMITY' => 'Calamiteit',
-        'MAINTENANCE' => 'Werk aan het spoor',
     ]
 ]);

@@ -23,9 +23,9 @@
     <h2>Storingen en calamiteiten</h2>
 
     {% if disruptions is not empty %}
-        {% for disruption_type, disruptions_list  in disruptions %}
+        {% for disruption_type, disruptions_list in disruptions %}
 
-            <h4>{{ names[disruption_type] }}</h4>
+            <h4>{{ titles[disruption_type] }}</h4>
             <div class="drop disruption">
 
                 {% for disruption in disruptions_list %}
@@ -43,14 +43,12 @@
                         {% endif %}
 
                         {# Toon de gevolgen voor de reis #}
-                        {% if disruption_type != 'MAINTENANCE' %}
-                            {% if disruption.publicationSections is defined %}
-                                {% for section in disruption.publicationSections %}
-                                    {% if section.consequence is defined and section.consequence.description is defined %}
-                                        <p>{{ section.consequence.description | capitalize }}</p>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
+                        {% if disruption.publicationSections is defined %}
+                            {% for section in disruption.publicationSections %}
+                                {% if section.consequence is defined and section.consequence.description is defined %}
+                                    <p>{{ section.consequence.description | capitalize }}</p>
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
 
                         {# Toon de description voor de reis #}
@@ -76,7 +74,7 @@
                         {% endif %}
 
                         {% if loop.last == false %}
-                            <img src="/static/img/ffcc36.gif" width="100%" height="1" alt="">
+                            <img src="/static/img/{% if getTheme() is same as('modern') %}ffcc36{% else %}000000{% endif %}.gif" width="100%" height="1" alt="">
                         {% endif %}
 
                 {% endfor %}

@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 
+setlocale(LC_ALL, 'nl_NL.UTF-8');
+
 use Dotenv\Dotenv;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
@@ -18,6 +20,7 @@ define('API_CACHE_TIME', $_ENV['API_CACHE_TIME']);
 
 $disruptionsApiResponse = getOrFetchCachedNsApiResult('/disruptions/v3?isActive=true');
 $storingen = sortDisruptions($disruptionsApiResponse);
+$aantalStoringen = count($storingen['CALAMITY'] ?? []) + count($storingen['DISRUPTION'] ?? []);
 
 store_theme();
 

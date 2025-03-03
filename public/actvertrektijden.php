@@ -56,7 +56,7 @@ echo $twig->render('vertrektijden.html.twig', [
     'stationQuery'      => $stationQuery,
     'departures'        => $departures,
     'stationName'       => $station['names']['long'] ?? htmlspecialchars($stationQuery),
-    'aantalStoringen'   => count($storingen['CALAMITY']),
+    'aantalStoringen'   => $aantalStoringen,
     'stationId'         => $stationId,
     'error'             => $error,
 ]);

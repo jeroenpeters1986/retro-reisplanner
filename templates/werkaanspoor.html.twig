@@ -25,59 +25,50 @@
     {% if disruptions is not empty %}
         {% for disruption_type, disruptions_list  in disruptions %}
 
-            <h4>{{ names[disruption_type] }}</h4>
+            <h4>{{ titles[disruption_type] }}</h4>
             <div class="drop disruption">
 
                 {% for disruption in disruptions_list %}
 
-                        <h4>{{ disruption.title }}</h4>
-                        {% if disruption.registrationTime is defined %}
-                            <p>
-                                <strong>Bericht {{ disruption.registrationTime | date("l d F Y, H:i") }}:</strong>
-                                {# Toon de oorzaak/reden #}
-                                {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
-                                    <br>
-                                    <strong>Reden:</strong> {{ disruption.timespans[0].situation.label }}
+                    <h4>{{ disruption.title }}</h4>
+                    {% if disruption.registrationTime is defined %}
+                        <p>
+                            <strong>Bericht {{ disruption.registrationTime | date("l d F Y, H:i") }}:</strong>
+                            {# Toon de oorzaak/reden #}
+                            {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
+                                <br>
+                                <strong>Reden:</strong> {{ disruption.timespans[0].situation.label }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+
+                    {# Toon de gevolgen voor de reis #}
+                    {% if disruption_type != 'MAINTENANCE' %}
+                        {% if disruption.publicationSections is defined %}
+                            {% for section in disruption.publicationSections %}
+                                {% if section.consequence is defined and section.consequence.description is defined %}
+                                    <p>{{ section.consequence.description | capitalize }}</p>
                                 {% endif %}
-                            </p>
+                            {% endfor %}
                         {% endif %}
+                    {% endif %}
 
-                        {# Toon de gevolgen voor de reis #}
-                        {% if disruption_type != 'MAINTENANCE' %}
-                            {% if disruption.publicationSections is defined %}
-                                {% for section in disruption.publicationSections %}
-                                    {% if section.consequence is defined and section.consequence.description is defined %}
-                                        <p>{{ section.consequence.description | capitalize }}</p>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
+                    {# Eindtijd #}
+                    {% if disruption.expectedDuration is defined %}
+                        {% if disruption.expectedDuration is defined and disruption.expectedDuration.description is defined %}
+                            <p>{{ disruption.expectedDuration.description }}</p>
                         {% endif %}
+                    {% endif %}
 
-                        {# Toon de description voor de reis #}
-                        {% if disruption_type == 'CALAMITY' %}
-                            {% if disruption.description is defined %}
-                                <p>{{ disruption.description }}</p>
-                            {% endif %}
-                            {% if disruption.buttons.items is defined %}
-                                <p><a href="{{ disruption.buttons.items[0].url }}" target="_blank">Meer informatie</a></p>
-                            {% endif %}
-                        {% endif %}
+                    {# Eindtijd #}
+                    {% if disruption.summaryAdditionalTravelTime.label is defined %}
+                        <p><strong>{{ disruption.summaryAdditionalTravelTime.label }}</strong></p>
+                    {% endif %}
 
-                        {# Eindtijd #}
-                        {% if disruption.expectedDuration is defined %}
-                            {% if disruption.expectedDuration is defined and disruption.expectedDuration.description is defined %}
-                                <p>{{ disruption.expectedDuration.description }}</p>
-                            {% endif %}
-                        {% endif %}
 
-                        {# Eindtijd #}
-                        {% if disruption.summaryAdditionalTravelTime.label is defined %}
-                            <p><strong>{{ disruption.summaryAdditionalTravelTime.label }}</strong></p>
-                        {% endif %}
-
-                        {% if loop.last == false %}
-                            <img src="/static/img/ffcc36.gif" width="100%" height="1" alt="">
-                        {% endif %}
+                    {% if loop.last == false %}
+                        <img src="/static/img/{% if getTheme() is same as('modern') %}ffcc36{% else %}000000{% endif %}.gif" width="100%" height="1" alt="">
+                    {% endif %}
 
                 {% endfor %}
             </div>

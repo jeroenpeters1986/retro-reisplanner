@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Render de template en geef de data door
 echo $twig->render('reisadvies.html.twig', [
     'reisInformatie'    => json_decode($responseData ?? '', true),
-    'aantalStoringen'   => count($storingen['CALAMITY']),
+    'aantalStoringen'   => $aantalStoringen,
     'page'              => 'index',
     'formData'          => $formData,
 ]);
