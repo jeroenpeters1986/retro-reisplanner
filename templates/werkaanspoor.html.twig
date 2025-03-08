@@ -32,37 +32,15 @@
 
                     <h4>{{ disruption.title }}</h4>
                     {% if disruption.registrationTime is defined %}
-                        <p>
-                            <strong>Bericht {{ disruption.registrationTime | date("l d F Y, H:i") }}:</strong>
-                            {# Toon de oorzaak/reden #}
-                            {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
-                                <br>
-                                <strong>Reden:</strong> {{ disruption.timespans[0].situation.label }}
-                            {% endif %}
-                        </p>
-                    {% endif %}
-
-                    {# Toon de gevolgen voor de reis #}
-                    {% if disruption_type != 'MAINTENANCE' %}
-                        {% if disruption.publicationSections is defined %}
-                            {% for section in disruption.publicationSections %}
-                                {% if section.consequence is defined and section.consequence.description is defined %}
-                                    <p>{{ section.consequence.description | capitalize }}</p>
-                                {% endif %}
-                            {% endfor %}
+                        {% if disruption.timespans is defined and disruption.timespans|length > 0 %}
+                            <p>{{ disruption.timespans[0].period }}</p>
+                            <p>{{ disruption.timespans[0].situation.label }}</p>
                         {% endif %}
                     {% endif %}
 
-                    {# Eindtijd #}
-                    {% if disruption.expectedDuration is defined %}
-                        {% if disruption.expectedDuration is defined and disruption.expectedDuration.description is defined %}
-                            <p>{{ disruption.expectedDuration.description }}</p>
-                        {% endif %}
-                    {% endif %}
-
-                    {# Eindtijd #}
+                    {# Gevolgen voor de reisduur #}
                     {% if disruption.summaryAdditionalTravelTime.label is defined %}
-                        <p><strong>{{ disruption.summaryAdditionalTravelTime.label }}</strong></p>
+                        <p><em>{{ disruption.summaryAdditionalTravelTime.label }}</em></p>
                     {% endif %}
 
 

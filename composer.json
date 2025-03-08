@@ -1,5 +1,12 @@
 {
+    "name": "jeroenpeters1986/retro-reisplanner",
+    "type": "project",
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
     "require": {
+        "twig/intl-extra": "^3.20",
         "twig/twig": "^3.0",
         "vlucas/phpdotenv": "^5.6"
     }

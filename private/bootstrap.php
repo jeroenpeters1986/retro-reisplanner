@@ -6,6 +6,7 @@ require_once __DIR__ . '/functions.php';
 setlocale(LC_ALL, 'nl_NL.UTF-8');
 
 use Dotenv\Dotenv;
+use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Twig\TwigFunction;
@@ -34,8 +35,9 @@ $determineCss = new TwigFunction('getTheme', function () {
 // Template engine
 $templateLoader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($templateLoader, [
-    //'cache' => __DIR__ . '/../cache/twigcache',
     'cache' => __DIR__ . '/../cache/twigcache',
     'auto_reload' => true,
 ]);
+
+$twig->addExtension(new IntlExtension());
 $twig->addFunction($determineCss);
