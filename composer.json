@@ -1,10 +1,12 @@
 {
     "name": "jeroenpeters1986/retro-reisplanner",
+    "description": "Retro Reisplanner",
     "type": "project",
     "config": {
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "license": "proprietary",
     "require": {
         "twig/intl-extra": "^3.20",
         "twig/twig": "^3.0",
