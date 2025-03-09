@@ -36,7 +36,6 @@ $determineCss = new TwigFunction('getTheme', function () {
 $templateLoader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($templateLoader, [
     'cache' => __DIR__ . '/../cache/twigcache',
-    'auto_reload' => true,
 ]);
 
 $twig->addExtension(new IntlExtension());
